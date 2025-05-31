@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Cliente</title>
+         <meta charset="UTF-8"> 
+        <link rel="stylesheet" href="ok.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"> 
+    </head>
+    <body>
+<center><h1>Cliente</h1>
+<form action="uno.php" method="post">
+
+<div class="input-group">
+
+ <label for="id">ID:</label>
+    <input type="text" name="id" size="44">
+
+
+<div class="input-container">
+      <i class="fa-solid fa-user"></i>
+      <label>Nombre <input type="text" name="nom" size="44"></label>
+    </div><br><br>
+
+    <div class="input-container">
+      <i class="fas fa-calendar"></i>
+      <label>Fecha de Nacimiento  <input type="date" min="1970-01-01" max="2024-12-31" name="fec" size="32"><br><br></label>
+    </div><br><br>
+
+    <div class="input-container">
+      <i class="fa-solid fa-phone"></i>
+      <label>Teléfono <input type="text" name="tel" size="44"></label>
+    </div><br><br>
+
+    <div class="input-container">
+      <i class="fa-solid fa-envelope"></i>
+      <label>RFC <input type="text" name="rfc" size="48"></label>
+    </div><br><br>
+
+    <div class="input-container">
+      <i class="fa-solid fa-home"></i>
+      <label>Dirección:</label>
+    </div><br><br>
+
+    <div class="input-container">
+      <i class="fas fa-location-dot"></i>
+      <label>Código Postal <input type="text" name="cod" size="29" id="cp"></label>
+    </div><br><br>
+
+    <div class="input-container">
+      <i class="fas fa-map"></i>
+      <label>Municipio <input type="text" name="mun" size="43" id="municipio" readonly></label>
+    </div><br><br>
+
+    <div class="input-container">
+      <i class="fas fa-route"></i>
+      <label>Estado <input type="text" name="est" size="46" id="estado" readonly></label>
+    </div><br><br>
+
+    <div class="input-container">
+      <i class="fas fa-street-view"></i>
+      <label>Colonia
+        <select name="col" id="colonia" size="1"></select>
+      </label>
+    </div><br><br>
+
+   
+
+   <div class="input-container"><i class="fas fa-map-pin"></i>
+   <label> Calle<input type="text" name="calle" size="47"></label><br><br>
+    
+
+
+
+     <input type="submit" name="el" value="Eliminar">
+     
+
+        </div>
+</form>
+</center>
+
+<script>
+  let codigosPostales = {};
+
+  fetch('codigos_postales.json')
+    .then(response => response.json())
+    .then(data => {
+      codigosPostales = data;
+    })
+    .catch(error => {
+      console.error('Error al cargar JSON:', error);
+      alert('No se pudo cargar la base de datos de códigos postales.');
+    });
+
+  document.getElementById("cp").addEventListener("blur", function () {
+  const cp = this.value.trim();
+
+  if (cp.length !== 5) {
+    alert("Por favor ingresa un código postal válido de 5 dígitos.");
+    return;
+  }
+
+  fetch('codigos_postales.json')
+    .then(res => {
+      if (!res.ok) {
+        throw new Error("No se pudo cargar el archivo JSON");
+      }
+      return res.json();
+    })
+    .then(coloniasData => {
+     
+      const datosCP = coloniasData.filter(item => item.codigo_postal === cp);
+
+      if (datosCP.length === 0) {
+        alert("Código postal no encontrado en la base de datos.");
+        document.getElementById("estado").value = "";
+        document.getElementById("municipio").value = "";
+        document.getElementById("colonia").innerHTML = '<option>No se encontraron colonias</option>';
+        return;
+      }
+
+      
+      document.getElementById("estado").value = datosCP[0].estado || "";
+      document.getElementById("municipio").value = datosCP[0].municipio || "";
+
+      
+      const coloniaSelect = document.getElementById("colonia");
+      coloniaSelect.innerHTML = "";
+      datosCP.forEach(item => {
+        const option = document.createElement("option");
+        option.value = item.asentamiento;
+        option.textContent = item.asentamiento;
+        coloniaSelect.appendChild(option);
+      });
+    })
+    .catch(error => {
+      alert("Error al cargar datos: " + error.message);
+    });
+}); 
+</script> 
+
+    </body>
+</html>

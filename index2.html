@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Cliente</title>
+         <meta charset="UTF-8"> 
+        <link rel="stylesheet" href="ok.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"> 
+    </head>
+    <body>
+<center><h1>Proveedor</h1>
+<form action="tr.php" method="post">
+
+<div class="input-group">
+*Solo ingresalo para buscar datos, eliminarlos o modificarlos, no para guardar*<br><br>
+ <label for="id">ID:</label>
+    <input type="text" name="id" size="44">
+<div class="input-container">
+      <i class="fas fa-id-card"></i>
+      <label>Clave <input type="text" name="cl" size="44"></label>
+    </div><br><br>
+
+<div class="input-container">
+      <i class="fa-solid fa-user"></i>
+      <label>Nombre <input type="text" name="nom" size="44"></label>
+    </div><br><br>
+
+    
+
+    <div class="input-container">
+      <i class="fa-solid fa-phone"></i>
+      <label>Teléfono <input type="text" name="tel" size="44"></label>
+    </div><br><br>
+
+    
+
+    
+
+   
+
+   <div class="input-container"><i class="fas fa-map-pin"></i>
+   <label> Dirección<input type="text" name="calle" size="47"></label><br><br>
+    <input type="submit" name="gu" value="Guardar">
+
+
+
+     <input type="submit" name="el" value="Eliminar">
+      <input type="submit" name="mod" value="Modificar">
+       <input type="submit" name="busid" value="Busqueda-ID">
+        <input type="submit" name="busnom" value="Busqueda-Nombre">
+
+
+        </div>
+</form>
+</center>
+    </body>
+</html>
